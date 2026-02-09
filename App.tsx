@@ -7,11 +7,26 @@ import GoalsConfiguration from './screens/GoalsConfiguration';
 import HierarchicalGoals from './screens/HierarchicalGoals';
 import GoalsHistory from './screens/GoalsHistory';
 import ExpenseAnalysis from './screens/ExpenseAnalysis';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import LoginScreen from './screens/LoginScreen';
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
+  const { user, loading } = useAuth();
   const [currentView, setCurrentView] = useState<View>(View.DASHBOARD);
   const [goalsData, setGoalsData] = useState<any[]>([]);
   const [expenseData, setExpenseData] = useState<any[]>([]);
+
+  if (loading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-gray-100">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <LoginScreen />;
+  }
 
   const handleProcessGoals = (data: any[]) => {
     setGoalsData(data);
@@ -44,10 +59,10 @@ const App: React.FC = () => {
         return <GoalsHistory onCreateNew={() => setCurrentView(View.GOALS_CONFIG)} />;
       case View.EXPENSE_ANALYSIS:
         return (
-            <ExpenseAnalysis 
-                onBack={() => setCurrentView(View.DASHBOARD)}
-                initialData={expenseData}
-            />
+          <ExpenseAnalysis 
+            onBack={() => setCurrentView(View.DASHBOARD)}
+            initialData={expenseData}
+          />
         );
       default:
         return <Dashboard />;
@@ -70,6 +85,14 @@ const App: React.FC = () => {
         {renderContent()}
       </div>
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 

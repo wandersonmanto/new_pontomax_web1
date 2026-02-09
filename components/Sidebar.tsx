@@ -1,4 +1,5 @@
 import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
 import { View, NavItem } from '../types';
 
 interface SidebarProps {
@@ -23,6 +24,7 @@ const extraItems = [
 ];
 
 const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, isDashboard }) => {
+  const { logout } = useAuth();
   return (
     <div className={`hidden lg:flex w-72 flex-col border-r border-gray-200 bg-white h-full shrink-0 z-20 transition-all duration-300 ${isDashboard ? 'bg-surface-light dark:bg-surface-dark' : ''}`}>
       <div className="flex h-full flex-col justify-between p-4">
@@ -79,9 +81,18 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onChangeView, isDashboar
           </nav>
         </div>
 
-        <div className="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-primary cursor-pointer transition-colors">
-          <span className="material-symbols-outlined text-xl">help</span>
-          <p className="text-sm font-medium">Ajuda e Suporte</p>
+        <div className="flex flex-col gap-2 p-3 mt-auto">
+          <div className="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-primary cursor-pointer transition-colors">
+            <span className="material-symbols-outlined text-xl">help</span>
+            <p className="text-sm font-medium">Ajuda e Suporte</p>
+          </div>
+          <div 
+            onClick={logout}
+            className="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-red-600 cursor-pointer transition-colors"
+          >
+            <span className="material-symbols-outlined text-xl">logout</span>
+            <p className="text-sm font-medium">Sair</p>
+          </div>
         </div>
       </div>
     </div>
