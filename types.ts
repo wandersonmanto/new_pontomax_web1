@@ -3,6 +3,8 @@ export enum View {
   GOALS_CONFIG = 'goals_config',
   GOALS_HIERARCHY = 'goals_hierarchy',
   GOALS_HISTORY = 'goals_history',
+  EXPENSE_CONFIG = 'expense_config',
+  EXPENSE_ANALYSIS = 'expense_analysis',
 }
 
 export interface NavItem {

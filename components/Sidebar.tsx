@@ -12,6 +12,7 @@ const navItems: NavItem[] = [
   { id: View.GOALS_CONFIG, label: 'Metas', icon: 'flag' }, // Config is the entry for "Metas" in the mock
   { id: View.GOALS_HIERARCHY, label: 'Vendas', icon: 'trending_up' },
   { id: View.GOALS_HISTORY, label: 'Histórico', icon: 'history' },
+  { id: View.EXPENSE_ANALYSIS, label: 'Despesas', icon: 'analytics' },
 ];
 
 // Additional items for visual completeness based on screenshots

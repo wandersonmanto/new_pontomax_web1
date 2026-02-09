@@ -6,14 +6,21 @@ import Dashboard from './screens/Dashboard';
 import GoalsConfiguration from './screens/GoalsConfiguration';
 import HierarchicalGoals from './screens/HierarchicalGoals';
 import GoalsHistory from './screens/GoalsHistory';
+import ExpenseAnalysis from './screens/ExpenseAnalysis';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>(View.DASHBOARD);
   const [goalsData, setGoalsData] = useState<any[]>([]);
+  const [expenseData, setExpenseData] = useState<any[]>([]);
 
   const handleProcessGoals = (data: any[]) => {
     setGoalsData(data);
     setCurrentView(View.GOALS_HIERARCHY);
+  };
+
+  const handleProcessExpenses = (data: any[]) => {
+    setExpenseData(data);
+    setCurrentView(View.EXPENSE_ANALYSIS);
   };
 
   const renderContent = () => {
@@ -35,6 +42,13 @@ const App: React.FC = () => {
         />;
       case View.GOALS_HISTORY:
         return <GoalsHistory onCreateNew={() => setCurrentView(View.GOALS_CONFIG)} />;
+      case View.EXPENSE_ANALYSIS:
+        return (
+            <ExpenseAnalysis 
+                onBack={() => setCurrentView(View.DASHBOARD)}
+                initialData={expenseData}
+            />
+        );
       default:
         return <Dashboard />;
     }
